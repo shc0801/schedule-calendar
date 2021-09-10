@@ -64,11 +64,10 @@ import {
     font-family: 'Noto Sans', sans-serif;
   }
   
-  /* #root {
-    width: 678px;
-    margin: 50px auto;
-    box-shadow: 0 3px 4px #121212;
-  } */
+  #root {
+    height: 100vh;
+    display: flex;
+  }
   `;
   
   export const globalColor = '#E669FF';
