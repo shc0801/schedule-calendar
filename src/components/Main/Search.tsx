@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchIcon from '../../assets/icon/index';
+import { SearchIcon } from '../../assets/icon';
 
 const Container = styled.div`
     

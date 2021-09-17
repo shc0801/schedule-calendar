@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import Menu from './Menu';
 
 const Aside = styled.aside `
-    width: 300px;
-    background-color: #ecf1f4;
+  width: 300px;
+  background-color: #687af8;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  color: #fff;
 
-    padding: 80px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 80px 50px;
 `
 
 const Sidebar: React.FC = () => {
   return (
     <Aside>
-        Logo
-        <Menu />
+      Logo
+      <Menu />
     </Aside>
   );
 };
