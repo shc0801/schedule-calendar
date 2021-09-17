@@ -17,8 +17,6 @@
 └── src
     ├── asset          # 이미지 및 svg 파일
     ├── components     # 컴포넌트
-    ├── store      # react-redux
-    ├── modules    # react-redux
     ├── pages          # 페이지
 ```
 ## 💻 실행 방법
