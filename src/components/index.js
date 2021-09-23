@@ -1,7 +1,7 @@
 import Header from './Main/Header';
-import Sidebar from './Sidebar/Sidebar';
+import Navigation from './Navigation/Navigation';
 
 export {
     Header,
-    Sidebar
+    Navigation
 };

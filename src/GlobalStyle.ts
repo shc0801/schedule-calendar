@@ -1,16 +1,17 @@
-import {
-    createGlobalStyle,
-    GlobalStyleComponent,
-    DefaultTheme,
-  } from 'styled-components';
-  
-  export const GlobalStyle: GlobalStyleComponent<
-    {},
-    DefaultTheme
-  > = createGlobalStyle`
+import styled, {
+  createGlobalStyle,
+  GlobalStyleComponent,
+  DefaultTheme
+} from "styled-components";
+
+export const GlobalStyle: GlobalStyleComponent<
+  {},
+  DefaultTheme
+> = createGlobalStyle`
   * {
     font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
     box-sizing: border-box;
+    color: inherit;
   }
   
   html, body, div, span, applet, object, iframe,
@@ -68,11 +69,15 @@ import {
     height: 100vh;
     display: flex;
   }
-  `;
-  
-  export const globalColor = '#E669FF';
-  export const globalBackColor = '#923EA3';
-  export const globalButtonColor = '#D96CF0';
-  export const globalComplementaryColor = '#6EA329';
-  export const globalComplementaryBackColor = '#B6F06C';
-  
+`;
+
+export const GlobalContainer = styled.div`
+  display: flex;
+  min-width: 1480px;
+`;
+
+export const globalColor = "#E669FF";
+export const globalBackColor = "#923EA3";
+export const globalButtonColor = "#D96CF0";
+export const globalComplementaryColor = "#6EA329";
+export const globalComplementaryBackColor = "#B6F06C";
