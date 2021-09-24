@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { FC, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import styled from 'styled-components';
-import Menu from './Menu';
+import { RouteData } from "../../lib/static";
+import NavigationItemContainer from './NavigationItemContainer';
 
-const Aside = styled.aside `
+const Aside = styled.aside`
   width: 350px;
   background-color: #687af8;
 
@@ -14,12 +17,26 @@ const Aside = styled.aside `
 
   padding: 80px 50px;
 `
+export interface NavItem {
+  name: string;
+  route: string;
+}
 
-const Navigation: React.FC = () => {
+interface Props {
+  routeData: RouteData;
+}
+
+const Navigation: FC<Props> = ({ routeData }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const goMain = useCallback(() => {
+    history.push("/home");
+  }, []);
+
   return (
     <Aside>
       Logo
-      <Menu />
+      <NavigationItemContainer navItem={routeData.data} />
     </Aside>
   );
 };
