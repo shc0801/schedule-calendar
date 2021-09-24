@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
-import pageReducer from "./page";
+import { Page } from "../actions";
+import page from "./page";
+
+export type RootState = {
+    page: Page
+}
 
 const rootReducer = combineReducers({
-    page: pageReducer,
+    page: page,
 });
 
 export default rootReducer;

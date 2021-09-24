@@ -1,24 +1,21 @@
+import { createReducer } from 'typesafe-actions';
 import { PageAction, PAGE_MOVE } from '../../actions';
+import { Page } from "../../actions/index";
+import produce from 'immer'
 
 export interface PageState {
-  url: string;
+  page: string;
 }
 
-const pageReducer = (
-  state: PageState = { url: '' },
-  action: PageAction,
-): PageState => {
-  switch (action.type) {
-    case PAGE_MOVE: {
-      return {
-        ...state,
-        url: action.payload.page,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
+const intitailState: Page = {
+  page: 'home',
 };
 
-export default pageReducer;
+const page = createReducer<Page, PageAction>(intitailState, {
+  [PAGE_MOVE]: (state, action) =>
+    produce(state, draft => {
+      draft.page = action.payload.page;
+    })
+})
+
+export default page;

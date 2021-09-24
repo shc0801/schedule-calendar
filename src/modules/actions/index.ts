@@ -9,3 +9,6 @@ export const pageMove = createStandardAction(PAGE_MOVE)<{
 }>();
 
 export type PageAction = ActionType<typeof pageMove>
+export type Page = {
+  page: string
+}
