@@ -8,7 +8,7 @@ export interface PageState {
 }
 
 const intitailState: Page = {
-  page: 'home',
+  page: '',
 };
 
 const page = createReducer<Page, PageAction>(intitailState, {
