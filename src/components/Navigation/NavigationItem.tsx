@@ -5,42 +5,45 @@ import styled from 'styled-components';
 import { pageMove } from '../../modules/actions';
 
 const Container = styled.div`
-  width: 350px;
-  background-color: #687af8;
-
+  width: 100%;
   color: #fff;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: 80px 50px;
+  padding: 30px 0;
+  cursor: pointer;
+`
+
+const Icon = styled.img`
+  width: 28px;
+  height: 28px;
 `
 
 interface Props {
   name: string;
   route: string;
+  src: string;
   isActive: boolean;
 }
 
 const NavigationItemContainer: FC<Props> = ({
-  name,
   route,
+  src,
   isActive               
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const onClick = () => {
-    if(history.location.pathname === route) return;
     dispatch(pageMove({page: route}));
-    console.log(route);
     history.push(route);
   };
 
   return (
-    <Container onClick={onClick}>
-      asdasdasd
+    <Container className={isActive ? "active" : ""} onClick={onClick}>
+      <Icon src={src}></Icon>
     </Container>
   );
 };

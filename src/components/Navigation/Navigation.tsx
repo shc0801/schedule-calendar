@@ -6,24 +6,38 @@ import { routeData } from "../../lib/static";
 import { getNavUrl } from "../../lib/utils";
 import { pageMove } from "../../modules/actions";
 import NavigationItemContainer from './NavigationItemContainer';
+import { LogoImg } from '../../assets/icon'; 
 
-const Container = styled.aside`
-  width: 350px;
-  background-color: #687af8;
+const Container = styled.div`
+  width: 110px;
+  height: 100%;
+  background-color: #E9ECF5;
 
-  color: #fff;
+  font-size: 1.4em;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 
-  padding: 80px 50px;
+  padding-top: 70px;
 `
+
+const Logo = styled.img`
+  width: 40px;
+`
+
+interface Props {
+  src: string;
+}
+
 
 export interface NavItem {
   name: string;
   enName: string;
   route: string;
+  nomalIcon: string;
+  activeIcon: string;
 }
 
 const Navigation: FC = () => {
@@ -37,7 +51,9 @@ const Navigation: FC = () => {
 
   return (
     <Container>
+      <Logo src={LogoImg} />
       <NavigationItemContainer routeData={routeData} />
+      <div></div>
     </Container>
   );
 };

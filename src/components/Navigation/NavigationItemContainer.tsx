@@ -4,20 +4,28 @@ import RootState from "../../modules/reducer/index";
 import styled from "styled-components";
 import { routeDataType } from "../../lib/static";
 import NavigationItem from "./NavigationItem";
+import { getNavUrl } from "../../lib/utils";
 // import NavigationItem from './NavigationItem';
 
 const Container = styled.nav`
+  width: 110px;
   display: flex;
   flex-direction: column;
+  
+  margin-bottom: 70px;
 
-  padding-top: 50px;
-
-  & > a {
-    font-size: 1.2em;
-    padding: 15px 0;
+  & > .active {
+    position: relative;
   }
-  & > a:nth-child(2) {
-    color: #000;
+  & > .active::before {
+    width: 5px;
+    height: 70%;
+    background-color: #6D6EC7;
+
+    position: absolute;
+    right: 0; top: 15%;
+
+    content: '';
   }
 `;
 
@@ -31,17 +39,19 @@ interface Props {
 }
 
 const NavigationItemContainer: FC<Props> = ({ routeData }) => {
-  const url = useSelector(
+  const data = useSelector(
     (state: ReturnType<typeof RootState>) => state.page.page
   );
-
+  const url = getNavUrl(data).page;
+  console.log(url);
   return (
     <Container>
-      {routeData.data.map((item, idx) => (
+      {routeData.data.map((item) => (
         <NavigationItem
-          key={idx}
+          key={item.route}
           name={item.name}
           route={item.route}
+          src={url === item.enName ? item.activeIcon : item.nomalIcon}
           isActive={url === item.enName}
         />
       ))}
