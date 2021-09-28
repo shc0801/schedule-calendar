@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import styled from 'styled-components';
-import { pageMove } from '../../modules/actions';
+import React, { FC } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import styled from "styled-components";
+import { pageMove } from "../../modules/actions";
 
 const Container = styled.div`
   width: 100%;
@@ -14,12 +14,12 @@ const Container = styled.div`
 
   padding: 30px 0;
   cursor: pointer;
-`
+`;
 
 const Icon = styled.img`
   width: 28px;
   height: 28px;
-`
+`;
 
 interface Props {
   name: string;
@@ -28,16 +28,12 @@ interface Props {
   isActive: boolean;
 }
 
-const NavigationItemContainer: FC<Props> = ({
-  route,
-  src,
-  isActive               
-}) => {
+const NavigationItemContainer: FC<Props> = ({ route, src, isActive }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const onClick = () => {
-    dispatch(pageMove({page: route}));
+    dispatch(pageMove({ page: route }));
     history.push(route);
   };
 

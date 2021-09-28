@@ -20,17 +20,15 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  position: relative;
+  z-index: 100;
+
   padding-top: 70px;
 `
 
-const Logo = styled.img`
+const Logo = styled.img<{ src: string }>`
   width: 40px;
 `
-
-interface Props {
-  src: string;
-}
-
 
 export interface NavItem {
   name: string;

@@ -43,7 +43,6 @@ const NavigationItemContainer: FC<Props> = ({ routeData }) => {
     (state: ReturnType<typeof RootState>) => state.page.page
   );
   const url = getNavUrl(data).page;
-  console.log(url);
   return (
     <Container>
       {routeData.data.map((item) => (

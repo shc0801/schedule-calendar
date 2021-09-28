@@ -1,7 +1,7 @@
-import Header from './Main/Header';
+import Schedule from './Main/Schedule/Schedule';
 import Navigation from './Navigation/Navigation';
 
 export {
-    Header,
+    Schedule,
     Navigation
 };
