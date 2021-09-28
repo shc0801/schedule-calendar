@@ -7,6 +7,7 @@ import {
 } from "./components";
 import {
   MainPage,
+  EditPage
 } from './pages';
 import { ToastContainer } from 'react-toastify';
 
@@ -19,7 +20,9 @@ const App: FC<{}> = () => {
       <Router history={history}>
         <Navigation />
         <Switch>
+          <Route path="/" exact render={() => <MainPage />} />
           <Route path="/home" component={MainPage} />
+          <Route path="/edit" component={EditPage} />
         </Switch>
       </Router>
     </GlobalContainer>
