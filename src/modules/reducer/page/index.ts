@@ -7,11 +7,11 @@ export interface PageState {
   page: string;
 }
 
-const intitailState: Page = {
+const initialState: Page = {
   page: '',
 };
 
-const page = createReducer<Page, PageAction>(intitailState, {
+const page = createReducer<Page, PageAction>(initialState, {
   [PAGE_MOVE]: (state, action) =>
     produce(state, draft => {
       draft.page = action.payload.page;
