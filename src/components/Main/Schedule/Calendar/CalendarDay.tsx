@@ -2,14 +2,13 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
+  width: calc(100% / 7);
   align-items: flex-end;
   color: rgb(75, 75, 75);
   font-weight: bold;
 `;
 
 const CalendarDayText = styled.p`
-  width: 110px;
-
   font-size: 1.7em;
   text-align: center;
 `;

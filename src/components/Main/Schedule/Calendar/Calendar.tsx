@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 // import CalendarDate from "./CalendarDate";
 import CalendarDay from "./CalendarDay";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../modules/reducer";
 
 const Container = styled.div`
-  width: calc(770px + 5vw);
+  width: 45vw;
   position: relative;
 
   padding: 15vh 0 0 3vw;
@@ -42,7 +44,7 @@ const CalendarDateContainer = styled.div`
 `
 
 const CalendarDate = styled.div`
-  width: 110px;
+  width: calc(100% / 7);
 
   font-size: 1.7em;
   font-weight: bold;
@@ -54,7 +56,7 @@ const CalendarDate = styled.div`
 `
 
 const CalendarAtiveDate = styled.div`
-  width: 110px;
+  width: calc(100% / 7);
 
   font-size: 1.7em;
   font-weight: bold;
@@ -98,9 +100,11 @@ const CalendarAtiveDate = styled.div`
 `
 
 const Calendar: React.FC = () => {
+  const { schedules, schedulerDate } = useSelector((state: RootState) => state.schedule);
+  console.log(schedules, schedulerDate);
   const dayArr: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-  const monthArr1: string[] = ["","","","","","","","","","","","","","","","","",""];
-  const monthArr2: string[] = ["","","","","","","","","","","",""];
+  const monthArr1: string[] = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+  const monthArr2: string[] = ["", "", "", "", "", "", "", "", "", "", "", ""];
   return (
     <Container>
       <CalenderMonth>
