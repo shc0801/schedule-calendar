@@ -9,7 +9,7 @@ const Container = styled.div`
 `;
 
 const CalendarDayText = styled.p`
-  font-size: 1.7em;
+  font-size: 1.8em;
   text-align: center;
 `;
 

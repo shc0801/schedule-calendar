@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-// import CalendarDate from "./CalendarDate";
 import CalendarDay from "./CalendarDay";
+import CalendarDate from "./CalendarDate";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../modules/reducer";
 
 const Container = styled.div`
-  width: 45vw;
+  width: 42vw;
   position: relative;
 
   padding: 15vh 0 0 3vw;
 `;
 
 const CalenderMonth = styled.span`
-  font-size: 2.3em;
+  font-size: 2.6em;
   color: #6d6ec7;
   font-weight: bold;
 
@@ -34,77 +34,13 @@ const CalendarDayContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  padding-top: 30px;
+  padding: 30px 0;
 `;
-
-const CalendarDateContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const CalendarDate = styled.div`
-  width: calc(100% / 7);
-
-  font-size: 1.7em;
-  font-weight: bold;
-  color: #838383;
-  text-align: center;
-  line-height: 100px;
-
-  position: relative;
-`
-
-const CalendarAtiveDate = styled.div`
-  width: calc(100% / 7);
-
-  font-size: 1.7em;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  line-height: 100px;
-
-  position: relative;
-
-  &::before {
-    width: 100px;
-    height: 100px;
-    background-color: #F5A6AA;
-
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-
-    border-radius: 50%;
-
-    opacity: .43;
-
-    content: '';
-  }
-  
-  &::after {
-    width: 80px;
-    height: 80px;
-    background-color: #F5A6AA;
-
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-
-    border-radius: 50%;
-
-    content: '';
-  }
-`
 
 const Calendar: React.FC = () => {
   const { schedules, schedulerDate } = useSelector((state: RootState) => state.schedule);
   console.log(schedules, schedulerDate);
   const dayArr: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-  const monthArr1: string[] = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-  const monthArr2: string[] = ["", "", "", "", "", "", "", "", "", "", "", ""];
   return (
     <Container>
       <CalenderMonth>
@@ -116,19 +52,7 @@ const Calendar: React.FC = () => {
             <CalendarDay key={day} day={day} />
           ))}
         </CalendarDayContainer>
-        <CalendarDateContainer>
-          {
-            monthArr1.map((item, i) => (
-              <CalendarDate>{i + 1}</CalendarDate>
-            ))
-          }
-          <CalendarAtiveDate>19</CalendarAtiveDate>
-          {
-            monthArr2.map((item, i) => (
-              <CalendarDate>{i + 20}</CalendarDate>
-            ))
-          }
-        </CalendarDateContainer>
+        <CalendarDate />
       </CalenderContent>
     </Container>
   );
