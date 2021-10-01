@@ -9,7 +9,7 @@ export const GlobalStyle: GlobalStyleComponent<
   DefaultTheme
 > = createGlobalStyle`
   * {
-    font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     box-sizing: border-box;
     color: inherit;
   }
