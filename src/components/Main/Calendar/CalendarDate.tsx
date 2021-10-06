@@ -7,8 +7,8 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { setSelectedDate } from "../../../../modules/actions";
-import { RootState } from "../../../../modules/reducer";
+import { setSelectedDate } from "../../../modules/actions";
+import { RootState } from "../../../modules/reducer";
 
 const CalendarDateContainer = styled.div`
   position: relative;
@@ -63,44 +63,6 @@ const CalendarDate: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const { schedulerDate } = useSelector((state: RootState) => state.schedule);
 
-  const handleClickDate = (target: HTMLDivElement) => {
-    const id = target.dataset.id;
-    const classList = target.classList;
-    const children = target.parentNode.children;
-
-    if (classList.contains("selected")) {
-      dispatch(setSelectedDate({ date: "" }));
-      classList.remove("selected");
-      return;
-    }
-
-    Array.from(children).map(el => {
-      el.classList.remove("selected");
-    });
-
-    dispatch(setSelectedDate({ date: id }));
-    classList.add("selected");
-  };
-
-  const getDateJSX = (
-    children: number,
-    id: string = "",
-    styling: string = ""
-  ): ReactElement => {
-    if (!styling) {
-      return (
-        <CalendarDateText key={id} className={styling}>{children}</CalendarDateText>
-      );
-    }
-
-    return (
-      <CalendarDateText key={id}
-        data-id={id}
-        className={styling}
-        onClick={e => handleClickDate(e.currentTarget)}>{children}</CalendarDateText>
-    );
-  };
-
   const printCalendar = useCallback((): ReactElement[] => {
     const yearCopy = schedulerDate.getFullYear();
     const monthCopy = schedulerDate.getMonth() + 1;
@@ -110,6 +72,44 @@ const CalendarDate: React.FC<Props> = () => {
     const jsx: ReactElement[] = [];
     let startDayCount = 1;
     let nextDayCount = 1;
+    
+    const getDateJSX = (
+      children: number,
+      id: string = "",
+      styling: string = ""
+    ): ReactElement => {
+      if (!styling) {
+        return (
+          <CalendarDateText key={id} className={styling}>{children}</CalendarDateText>
+        );
+      }
+
+      return (
+        <CalendarDateText key={id}
+          data-id={id}
+          className={styling}
+          onClick={e => handleClickDate(e.currentTarget)}>{children}</CalendarDateText>
+      );
+    };
+
+    const handleClickDate = (target: HTMLDivElement) => {
+      const id = target.dataset.id;
+      const classList = target.classList;
+      const children = target.parentNode.children;
+  
+      if (classList.contains("selected")) {
+        dispatch(setSelectedDate({ date: "" }));
+        classList.remove("selected");
+        return;
+      }
+  
+      Array.from(children).forEach(el => {
+        el.classList.remove("selected");
+      });
+  
+      dispatch(setSelectedDate({ date: id }));
+      classList.add("selected");
+    };
 
     for (let i = 0; i < 6; i += 1) {
       for (let j = 0; j < 7; j += 1) {
@@ -140,17 +140,17 @@ const CalendarDate: React.FC<Props> = () => {
       }
     }
     return jsx;
-  }, [schedulerDate]);
+  }, [schedulerDate, dispatch]);
 
   const memoizedCalendar = useMemo<ReactElement[]>(() => {
     return printCalendar();
-  }, [schedulerDate]);
+  }, [printCalendar]);
 
   useEffect(() => {
     return () => {
       dispatch(setSelectedDate({ date: "" }));
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <CalendarDateContainer>

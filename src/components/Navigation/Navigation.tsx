@@ -1,10 +1,6 @@
-import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import React, { FC } from "react";
 import styled from 'styled-components';
 import { routeData } from "../../lib/static";
-import { getNavUrl } from "../../lib/utils";
-import { pageMove } from "../../modules/actions";
 import NavigationItemContainer from './NavigationItemContainer';
 import { LogoImg } from '../../assets/icon'; 
 
@@ -39,14 +35,6 @@ export interface NavItem {
 }
 
 const Navigation: FC = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    const url = getNavUrl(history.location.pathname);
-    dispatch(pageMove(url));
-  });
-
   return (
     <Container>
       <Logo src={LogoImg} />
