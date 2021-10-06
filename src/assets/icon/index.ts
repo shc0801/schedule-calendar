@@ -6,4 +6,6 @@ export { default as OptionIcon } from "./OptionIcon.svg";
 export { default as ActiveOptionIcon } from "./ActiveOptionIcon.svg";
 export { default as UserIcon } from "./UserIcon.svg";
 export { default as ActiveUserIcon } from "./ActiveUserIcon.svg";
+export { default as LeftAngle } from "./LeftAngle.svg";
+export { default as RightAngle } from "./RightAngle.svg";
 export { default as LogoImg } from "./Logo.svg";

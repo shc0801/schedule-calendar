@@ -1,18 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Calendar from '../components/Main/Schedule/Calendar/Calendar';
+import Calendar from '../components/Main/Calendar/Calendar';
+import Schedule from '../components/Main/Schedule/Schedule';
 
 const Container = styled.div `
   width: calc(100vw - 110px);
   background-color: #F4F4FB;
-`
 
-const MainLeft = styled.div`
-  width: 70%;
-  height: 100%;
-
-  position: relative;
-  z-index: 100;
+  display: flex;
 `
 
 const MainBackground = styled.div`
@@ -27,6 +22,22 @@ const MainBackground = styled.div`
   border-radius: 0 50% 50% 0;
 `
 
+const MainLeft = styled.div`
+  width: 50%;
+  height: 100%;
+
+  position: relative;
+  z-index: 100;
+`
+
+const MainRight = styled.div`
+  width: 50%;
+  height: 100%;
+
+  position: relative;
+  z-index: 100;
+`
+
 const MainPage: React.FC = () => {
   return (
     <Container>
@@ -34,6 +45,9 @@ const MainPage: React.FC = () => {
       <MainLeft>
         <Calendar />
       </MainLeft>
+      <MainRight>
+        <Schedule />
+      </MainRight>
     </Container>
   );
 };
