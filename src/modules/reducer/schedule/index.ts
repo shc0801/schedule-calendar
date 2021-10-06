@@ -1,5 +1,5 @@
 import { createReducer } from "typesafe-actions";
-import { ScheduleAction, SET_SCHEDULES, SET_SELECTED_DATE } from "../../actions";
+import { ScheduleAction, SET_SCHEDULE_DATE, SET_SELECTED_DATE } from "../../actions";
 import { Schedules } from "../../actions/index";
 import produce from 'immer'
 
@@ -23,9 +23,9 @@ const initialState: scheduleState = {
 };
 
 const schedule = createReducer<Schedules, ScheduleAction>(initialState, {
-  [SET_SCHEDULES]: (state, action) =>
+  [SET_SCHEDULE_DATE]: (state, action) =>
     produce(state, draft => {
-      draft.schedules = action.payload.schedules;
+      draft.schedulerDate = action.payload.schedulerDate;
     }),
   [SET_SELECTED_DATE]: (state, action) =>
     produce(state, draft => {

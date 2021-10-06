@@ -4,15 +4,14 @@ import { scheduleType } from "../reducer/schedule";
 const { createStandardAction } = deprecated;
 
 export const PAGE_MOVE = "page/PAGE_MOVE";
-export const SET_SCHEDULES = "schedule/SET_SCHEDULES";
+export const SET_SCHEDULE_DATE = "schedule/SET_SCHEDULE_DATE";
 export const SET_SELECTED_DATE = "schedule/SET_SELECTED_DATE";
 
 export const pageMove = createStandardAction(PAGE_MOVE)<{
   page: string
 }>();
 
-export const setSchedules = createStandardAction(SET_SCHEDULES)<{
-  schedules: scheduleType[],
+export const setScheduleDate = createStandardAction(SET_SCHEDULE_DATE)<{
   schedulerDate: Date
 }>();
 
@@ -25,7 +24,7 @@ export type Page = {
   page: string
 }
 export type ScheduleAction = ActionType<
-  typeof setSchedules | typeof setSelectedDate
+  typeof setScheduleDate | typeof setSelectedDate
 >
 export type Schedules = {
   schedules: scheduleType[],
