@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Calendar from '../components/Main/Calendar/Calendar';
-import Schedule from '../components/Main/Schedule/Schedule';
+import { Calendar, Schedule } from '../components';
 
 const Container = styled.div `
   width: calc(100vw - 110px);
