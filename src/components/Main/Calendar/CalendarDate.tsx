@@ -55,6 +55,28 @@ const CalendarDateText = styled.div`
 
     content: '';
   }
+
+  & > div {
+    width: 10px;
+    height: 10px;
+
+    position: absolute;
+    bottom: 0;
+
+    border-radius: 50%;
+  }
+  & > div:nth-child(1) {
+    background-color: #faa;
+    left: 28%;
+  }
+  & > div:nth-child(2) {
+    background-color: #afa;
+    left: calc(28% + 20px);
+  }
+  & > div:nth-child(3) {
+    background-color: #aaf;
+    left: calc(28% + 40px);
+  }
 `
 
 interface Props { }
@@ -72,12 +94,79 @@ const CalendarDate: React.FC<Props> = () => {
     const jsx: ReactElement[] = [];
     let startDayCount = 1;
     let nextDayCount = 1;
+
+    const schedules = [
+      {
+        id: 1,
+        startTime: "08:30",
+        endTime: "09:00",
+        TagName: "Developing",
+        content: "SetUp Github",
+        year: "2021",
+        month: "10",
+        day: 13
+      },
+      {
+        id: 2,
+        startTime: "09:30",
+        endTime: "10:45",
+        TagName: "Strategy Planning",
+        content: "3categories of rocks",
+        year: "2021",
+        month: "10",
+        day: 13
+      },
+      {
+        id: 3,
+        startTime: "11:00",
+        endTime: "12:15",
+        TagName: "Discovery",
+        content: "Financian prijec",
+        year: "2021",
+        month: "10",
+        day: 13
+      },
+      {
+        id: 4,
+        startTime: "17:00",
+        endTime: "17:15",
+        TagName: "Developing",
+        content: "Server Develop",
+        year: "2021",
+        month: "10",
+        day: 22
+      },
+      {
+        id: 5,
+        startTime: "20:00",
+        endTime: "21:25",
+        TagName: "Discovery",
+        content: "Launch day Bestbuy",
+        year: "2021",
+        month: "10",
+        day: 22
+      },
+    ];
     
     const getDateJSX = (
       children: number,
       id: string = "",
       styling: string = ""
     ): ReactElement => {
+      let count = 0;
+      schedules.forEach(item => {
+        if(startDayCount === item.day) {
+          count++;
+        }
+      })
+      const makeCircle = ():ReactElement[] => {
+        let result = [];
+        for (let i = 0; i < count; i++) {
+          result.push(<div key={i}></div>);
+        }
+        return result;
+      }
+
       if (!styling) {
         return (
           <CalendarDateText key={id} className={styling}>{children}</CalendarDateText>
@@ -88,7 +177,7 @@ const CalendarDate: React.FC<Props> = () => {
         <CalendarDateText key={id}
           data-id={id}
           className={styling}
-          onClick={e => handleClickDate(e.currentTarget)}>{children}</CalendarDateText>
+          onClick={e => handleClickDate(e.currentTarget)}>{children}{makeCircle()}</CalendarDateText>
       );
     };
 
