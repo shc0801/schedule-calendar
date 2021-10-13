@@ -9,3 +9,4 @@ export { default as ActiveUserIcon } from "./ActiveUserIcon.svg";
 export { default as LeftAngle } from "./LeftAngle.svg";
 export { default as RightAngle } from "./RightAngle.svg";
 export { default as LogoImg } from "./Logo.svg";
+export { default as EditTitleIcon } from "./EditTitleIcon.svg";
