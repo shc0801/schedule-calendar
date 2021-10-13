@@ -23,7 +23,7 @@ const MainBackground = styled.div`
 `
 
 const MainLeft = styled.div`
-  width: 50%;
+  width: 60%;
   height: 100%;
 
   position: relative;
@@ -31,11 +31,13 @@ const MainLeft = styled.div`
 `
 
 const MainRight = styled.div`
-  width: 50%;
+  width: 40%;
   height: 100%;
 
   position: relative;
   z-index: 100;
+
+  padding-top: 150px;
 `
 
 const MainPage: React.FC = () => {
