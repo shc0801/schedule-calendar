@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 
 const ScheduleItem = styled.div`
@@ -61,17 +61,24 @@ const ScheduleContentTagName = styled.span`
   color: #9c9c9c;
 `
 
-const ScheduleDetailItem: React.FC = () => {
+interface Props {
+  startTime: string;
+  endTime: string;
+  TagName: string;
+  content: string;
+}
+
+const ScheduleDetailItem: FC<Props> = ({ startTime, endTime, TagName, content }) => {
   return (
     <ScheduleItem>
       <ScheduleTimeContainer>
-        <ScheduleStartTime>08:30</ScheduleStartTime>
-        <ScheduleEndTime>09:00</ScheduleEndTime>
+        <ScheduleStartTime>{startTime}</ScheduleStartTime>
+        <ScheduleEndTime>{endTime}</ScheduleEndTime>
       </ScheduleTimeContainer>      
       <ScheduleContourLine />
       <ScheduleContent>
-        <ScheduleContentTagName>Developing</ScheduleContentTagName>
-        SetUp Github
+        <ScheduleContentTagName>{TagName}</ScheduleContentTagName>
+        {content}
       </ScheduleContent>
     </ScheduleItem>
   );
