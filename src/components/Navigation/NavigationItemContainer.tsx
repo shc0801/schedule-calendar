@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { routeDataType } from "../../lib/static";
 import NavigationItem from "./NavigationItem";
 import { getNavUrl } from "../../lib/utils";
-// import NavigationItem from './NavigationItem';
+import { useHistory } from "react-router";
 
 const Container = styled.nav`
   width: 110px;
@@ -39,10 +39,13 @@ interface Props {
 }
 
 const NavigationItemContainer: FC<Props> = ({ routeData }) => {
-  const data = useSelector(
+  useSelector(
     (state: ReturnType<typeof RootState>) => state.page.page
   );
-  const url = getNavUrl(data).page;
+  const history = useHistory();
+  const page = getNavUrl(history.location.pathname).page;
+  console.log(page);
+
   return (
     <Container>
       {routeData.data.map((item) => (
@@ -50,8 +53,8 @@ const NavigationItemContainer: FC<Props> = ({ routeData }) => {
           key={item.route}
           name={item.name}
           route={item.route}
-          src={url === item.enName ? item.activeIcon : item.nomalIcon}
-          isActive={url === item.enName}
+          src={page === item.enName ? item.activeIcon : item.nomalIcon}
+          isActive={page === item.enName}
         />
       ))}
     </Container>
