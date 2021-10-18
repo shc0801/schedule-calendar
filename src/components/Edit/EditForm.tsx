@@ -144,11 +144,11 @@ const EditForm: FC = () => {
     tagName: "",
     content: "",
   });
-  const { title, startDate, startTime, endTime, tagName, content } = schedule; //user 객체 비구조화 할당
+  const { title, startDate, startTime, endTime, tagName, content } = schedule;
 
   const onChangeInput = e => {
     const { name, value } = e.target;
-    setSchedule({ ...schedule, [name]: value }); //...user로 불변성 유지와  [name]을 사용해서 현재 입력하고 있는 input의 name의 상태 변경.
+    setSchedule({ ...schedule, [name]: value }); 
   };
 
   const allReset = () => {
