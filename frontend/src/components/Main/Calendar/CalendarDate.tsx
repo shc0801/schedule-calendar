@@ -6,8 +6,9 @@ import React, {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import Api from "../../../apis";
 
-import { setSelectedDate } from "../../../modules/actions";
+import { setSchedule, setSelectedDate } from "../../../modules/actions";
 import { RootState } from "../../../modules/reducer";
 
 const CalendarDateContainer = styled.div`
@@ -83,7 +84,8 @@ interface Props { }
 
 const CalendarDate: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const { schedulerDate } = useSelector((state: RootState) => state.schedule);
+  const { schedules, schedulerDate } = useSelector((state: RootState) => state.schedule);
+  
 
   const printCalendar = useCallback((): ReactElement[] => {
     const yearCopy = schedulerDate.getFullYear();
@@ -95,58 +97,16 @@ const CalendarDate: React.FC<Props> = () => {
     let startDayCount = 1;
     let nextDayCount = 1;
 
-    const schedules = [
-      {
-        id: 1,
-        startTime: "08:30",
-        endTime: "09:00",
-        TagName: "Developing",
-        content: "SetUp Github",
-        year: "2021",
-        month: "10",
-        day: 13
-      },
-      {
-        id: 2,
-        startTime: "09:30",
-        endTime: "10:45",
-        TagName: "Strategy Planning",
-        content: "3categories of rocks",
-        year: "2021",
-        month: "10",
-        day: 13
-      },
-      {
-        id: 3,
-        startTime: "11:00",
-        endTime: "12:15",
-        TagName: "Discovery",
-        content: "Financian prijec",
-        year: "2021",
-        month: "10",
-        day: 13
-      },
-      {
-        id: 4,
-        startTime: "17:00",
-        endTime: "17:15",
-        TagName: "Developing",
-        content: "Server Develop",
-        year: "2021",
-        month: "10",
-        day: 22
-      },
-      {
-        id: 5,
-        startTime: "20:00",
-        endTime: "21:25",
-        TagName: "Discovery",
-        content: "Launch day Bestbuy",
-        year: "2021",
-        month: "10",
-        day: 22
-      },
-    ];
+    const year = new Date(schedulerDate).getFullYear();
+    const month = new Date(schedulerDate).getMonth() + 1;
+
+    Api.post("/get/schedule", { year, month })
+      .then((res) => {
+        dispatch(setSchedule({ schedules: res.data.result }));
+      })
+      .catch((err) => {
+        throw err;
+      });
     
     const getDateJSX = (
       children: number,
@@ -155,7 +115,9 @@ const CalendarDate: React.FC<Props> = () => {
     ): ReactElement => {
       let count = 0;
       schedules.forEach(item => {
-        if(startDayCount === item.day) {
+        const { day } = item;
+        console.log(item)
+        if(startDayCount === day) {
           count++;
         }
       })

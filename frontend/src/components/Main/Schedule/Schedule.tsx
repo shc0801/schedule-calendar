@@ -29,7 +29,7 @@ const ScheduleContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  padding-top: 60px;
+  padding-top: 15vh;
 `
 
 const SelectText = styled.span`

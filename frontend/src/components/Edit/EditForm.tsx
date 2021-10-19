@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 import ColorPicker from "react-pick-color";
+import toast from "react-hot-toast";
+import Api from "../../apis";
 
 const Container = styled.form`
   font-size: 1.4em;
@@ -111,68 +113,160 @@ const ScheduleAddBtn = styled.div`
   color: #fff;
   font-size: 0.7em;
   font-weight: 700;
-  
+
   position: absolute;
-  right: 10%; bottom: -15%;
+  right: 10%;
+  bottom: -15%;
 
   margin-top: 50px;
   padding: 20px 80px;
   border-radius: 10px;
   cursor: pointer;
-`
+`;
 
 const FormResetText = styled.p`
   font-size: 0.6em;
   font-weight: bold;
 
   position: absolute;
-  right: 50%; bottom: -15%;
-`
+  right: 50%;
+  bottom: -15%;
+`;
 
 const FormResetTextBold = styled.u`
   cursor: pointer;
-`
+`;
 
 const EditForm: FC = () => {
   const [color, setColor] = useState("#fff");
 
   const [schedule, setSchedule] = useState({
     title: "",
-    startDate: "",
-    startTime: "",
-    endTime: "",
-    tagName: "",
+    date: "",
+    start_time: "",
+    end_time: "",
+    tag_name: "",
     content: "",
   });
-  const { title, startDate, startTime, endTime, tagName, content } = schedule;
-
-  const onChangeInput = e => {
+  const { title, date, start_time, end_time, tag_name, content } = schedule;
+  const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setSchedule({ ...schedule, [name]: value }); 
+    setSchedule({ ...schedule, [name]: value });
   };
 
   const allReset = () => {
-    setSchedule({ title: "", startDate: "", startTime: "", endTime: "", tagName: "", content: "" });
+    setSchedule({
+      title: "",
+      date: "",
+      start_time: "",
+      end_time: "",
+      tag_name: "",
+      content: "",
+    });
   };
 
   const resetTitle = () => {
-    setSchedule({ title: "", startDate: startDate, startTime: startTime, endTime: endTime, tagName: tagName, content: content });
-  }
-  
+    setSchedule({
+      title: "",
+      date: date,
+      start_time: start_time,
+      end_time: end_time,
+      tag_name: tag_name,
+      content: content,
+    });
+  };
+
   const resetStartDateTime = () => {
-    setSchedule({ title: title, startDate: "", startTime: "", endTime: endTime, tagName: tagName, content: content });
-  }
+    setSchedule({
+      title: title,
+      date: "",
+      start_time: "",
+      end_time: end_time,
+      tag_name: tag_name,
+      content: content,
+    });
+  };
   const resetendTime = () => {
-    setSchedule({ title: title, startDate: startDate, startTime: startTime, endTime: "", tagName: tagName, content: content });
-  }
-  
+    setSchedule({
+      title: title,
+      date: date,
+      start_time: start_time,
+      end_time: "",
+      tag_name: tag_name,
+      content: content,
+    });
+  };
+
   const resetTagName = () => {
-    setSchedule({ title: title, startDate: startDate, startTime: startTime, endTime: endTime, tagName: "", content: content });
-  }
-  
+    setSchedule({
+      title: title,
+      date: date,
+      start_time: start_time,
+      end_time: end_time,
+      tag_name: "",
+      content: content,
+    });
+  };
+
   const resetContent = () => {
-    setSchedule({ title: title, startDate: startDate, startTime: startTime, endTime: endTime, tagName: tagName, content: "" });
-  }
+    setSchedule({
+      title: title,
+      date: date,
+      start_time: start_time,
+      end_time: end_time,
+      tag_name: tag_name,
+      content: "",
+    });
+  };
+
+  const Edit = async () => {
+    if (
+      title.trim() === "" ||
+      date.trim() === "" ||
+      start_time.trim() === "" ||
+      end_time.trim() === "" ||
+      tag_name.trim() === "" ||
+      content.trim() === ""
+    ) {
+      toast.error("공백이 존재합니다!", {
+        style: {
+          border: "1px solid #6d6ec7",
+          padding: "16px",
+          color: "#6d6ec7",
+        },
+        iconTheme: {
+          primary: "#6d6ec7",
+          secondary: "#FFFAEE",
+        },
+      });
+      return;
+    }
+
+    const { user_id } = JSON.parse(localStorage.getItem("user"))[0];
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth() + 1;
+    const day = new Date(date).getDate();
+    
+    Api.post("/edit", {
+      title,
+      user_id,
+      tag_name,
+      year, 
+      month, 
+      day,
+      start_time,
+      end_time,
+      content,
+      color,
+    })
+      .then((res) => {
+        toast.success(res.data.msg);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+        throw err;
+      });
+  };
 
   return (
     <Container>
@@ -182,16 +276,31 @@ const EditForm: FC = () => {
             <FormLabel>제목</FormLabel>
             <ClearBtn onClick={resetTitle}>Clear</ClearBtn>
           </FlexBetween>
-          <ScheduleTitleInput name="title" onChange={onChangeInput} value={title} placeholder="제목을 입력해주세요" />
+          <ScheduleTitleInput
+            name="title"
+            onChange={onChangeInput}
+            value={title}
+            placeholder="제목을 입력해주세요"
+          />
         </FormGroup>
         <FormGroup>
           <FlexBetween>
-            <FormLabel>시작하는 날짜, 시간</FormLabel>
+            <FormLabel>날짜, 시작 시간</FormLabel>
             <ClearBtn onClick={resetStartDateTime}>Clear</ClearBtn>
           </FlexBetween>
           <FlexBetween>
-            <ScheduleStartDateInput name="startDate" onChange={onChangeInput} value={startDate} type="date" />
-            <ScheduleStartTimeInput name="startTime" onChange={onChangeInput} value={startTime} type="time" />
+            <ScheduleStartDateInput
+              name="date"
+              onChange={onChangeInput}
+              value={date}
+              type="date"
+            />
+            <ScheduleStartTimeInput
+              name="start_time"
+              onChange={onChangeInput}
+              value={start_time}
+              type="time"
+            />
           </FlexBetween>
         </FormGroup>
       </FormTop>
@@ -201,14 +310,24 @@ const EditForm: FC = () => {
             <FormLabel>태그</FormLabel>
             <ClearBtn onClick={resetTagName}>Clear</ClearBtn>
           </FlexBetween>
-          <ScheduleTagNameInput name="tagName" onChange={onChangeInput} value={tagName} placeholder="태그 이름을 입력해주세요" />
+          <ScheduleTagNameInput
+            name="tag_name"
+            onChange={onChangeInput}
+            value={tag_name}
+            placeholder="태그 이름을 입력해주세요"
+          />
         </FormGroup>
         <FormGroup>
           <FlexBetween>
             <FormLabel>마감 시간</FormLabel>
             <ClearBtn onClick={resetendTime}>Clear</ClearBtn>
           </FlexBetween>
-          <ScheduleStartDateInput name="endTime" onChange={onChangeInput} value={endTime} type="time" />
+          <ScheduleStartDateInput
+            name="end_time"
+            onChange={onChangeInput}
+            value={end_time}
+            type="time"
+          />
         </FormGroup>
       </FormMid>
       <FormMid>
@@ -217,7 +336,12 @@ const EditForm: FC = () => {
             <FormLabel>내용</FormLabel>
             <ClearBtn onClick={resetContent}>Clear</ClearBtn>
           </FlexBetween>
-          <ScheduleContentTextArea name="content" onChange={onChangeInput} value={content} placeholder="내용을 입력해주세요" />
+          <ScheduleContentTextArea
+            name="content"
+            onChange={onChangeInput}
+            value={content}
+            placeholder="내용을 입력해주세요"
+          />
         </FormGroup>
         <FormGroup>
           <FlexBetween>
@@ -232,8 +356,12 @@ const EditForm: FC = () => {
         </FormGroup>
       </FormMid>
       <FormBottom>
-        <FormResetText>모든 내용을 지우고 싶습니까? <FormResetTextBold onClick={allReset}>여기</FormResetTextBold>를 눌러주세요</FormResetText>
-        <ScheduleAddBtn>등록하기</ScheduleAddBtn>
+        <FormResetText>
+          모든 내용을 지우고 싶습니까?{" "}
+          <FormResetTextBold onClick={allReset}>여기</FormResetTextBold>를
+          눌러주세요
+        </FormResetText>
+        <ScheduleAddBtn onClick={Edit}>등록하기</ScheduleAddBtn>
       </FormBottom>
     </Container>
   );

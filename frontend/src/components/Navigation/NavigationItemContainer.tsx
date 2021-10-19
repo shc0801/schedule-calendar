@@ -45,6 +45,7 @@ const NavigationItemContainer: FC<Props> = ({ routeData }) => {
   const history = useHistory();
   const page = getNavUrl(history.location.pathname).page;
 
+  console.log(page);
   return (
     <Container>
       {routeData.data.map((item) => (

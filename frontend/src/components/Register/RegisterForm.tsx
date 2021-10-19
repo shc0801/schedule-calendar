@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import Api from "../../apis";
 import { LogoImg } from "../../assets/icon";
 import { pageMove } from "../../modules/actions";
 
@@ -97,22 +99,100 @@ const EditForm: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const onClick = () => {
-    dispatch(pageMove({ page: '/login' }));
-    history.push('/login');
+  const goLoginPage = () => {
+    dispatch(pageMove({ page: "/login" }));
+    history.push("/login");
+  };
+
+  const [input, setInput] = useState({
+    user_id: "",
+    user_name: "",
+    user_pass: "",
+    user_pass2: "",
+  });
+  const { user_id, user_name, user_pass, user_pass2 } = input;
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
+
+  const Submit = async () => {
+    if (
+      user_id.trim() === "" ||
+      user_name.trim() === "" ||
+      user_pass.trim() === "" ||
+      user_pass2.trim() === ""
+    ) {
+      toast.error("공백이 존재합니다!", {
+        style: {
+          border: "1px solid #6d6ec7",
+          padding: "16px",
+          color: "#6d6ec7",
+        },
+        iconTheme: {
+          primary: "#6d6ec7",
+          secondary: "#FFFAEE",
+        },
+      });
+      return;
+    }
+    if (user_pass !== user_pass2) {
+      toast.error("비밀번호가 일치하지 않습니다!", {
+        style: {
+          border: "1px solid #6d6ec7",
+          padding: "16px",
+          color: "#6d6ec7",
+        },
+        iconTheme: {
+          primary: "#6d6ec7",
+          secondary: "#FFFAEE",
+        },
+      });
+      return;
+    }
+    
+    Api.post("/register", { user_id, user_name, user_pass })
+    .then(res => {
+      toast.success(res.data.msg);
+      goLoginPage();
+    })
+    .catch(err => {
+      toast.error(err.response.data.msg);
+      throw err;
+    }) 
   };
 
   return (
     <Container>
       <Logo src={LogoImg} />
       <RegisterFormTitle>Scheder</RegisterFormTitle>
-      <RegisterIdInput placeholder="아이디" />
-      <RegisterNameInput placeholder="이름" />
-      <RegisterPwInput type="password" placeholder="비밀번호" />
-      <RegisterPw2Input type="password" placeholder="비밀번호 확인" />
-      <RegisterBtn>회원가입</RegisterBtn>
+      <RegisterIdInput
+        name="user_id"
+        onChange={onChangeInput}
+        placeholder="아이디"
+      />
+      <RegisterNameInput
+        name="user_name"
+        onChange={onChangeInput}
+        placeholder="이름"
+      />
+      <RegisterPwInput
+        name="user_pass"
+        onChange={onChangeInput}
+        type="password"
+        placeholder="비밀번호"
+      />
+      <RegisterPw2Input
+        name="user_pass2"
+        onChange={onChangeInput}
+        type="password"
+        placeholder="비밀번호 확인"
+      />
+      <RegisterBtn onClick={Submit}>회원가입</RegisterBtn>
       <GoLoginText>
-        다시 돌아가고 싶으신가요? <GoLoginTextU onClick={onClick}>로그인</GoLoginTextU>
+        다시 돌아가고 싶으신가요?{" "}
+        <GoLoginTextU onClick={goLoginPage}>로그인</GoLoginTextU>
       </GoLoginText>
     </Container>
   );

@@ -12,19 +12,22 @@ import {
   LoginPage,
   RegisterPage
 } from './pages';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 const App: FC<{}> = () => {
 
   return (
     <GlobalContainer>
       <GlobalStyle />
-      <ToastContainer />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <Router history={history}>
         <Header />
         <Navigation />
         <Switch>
-          <Route path="/" exact render={() => <MainPage />} />
+          <Route path="/1" exact render={() => <MainPage />} />
           <Route path="/home" component={MainPage} />
           <Route path="/edit" component={EditPage} />
           <Route path="/login" component={LoginPage} />

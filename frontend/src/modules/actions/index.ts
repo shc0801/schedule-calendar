@@ -1,14 +1,18 @@
 import { ActionType, deprecated } from "typesafe-actions";
-import { scheduleType } from "../reducer/schedule";
 
 const { createStandardAction } = deprecated;
 
 export const PAGE_MOVE = "page/PAGE_MOVE";
+export const SET_SCHEDULE = "schedule/SET_SCHEDULE";
 export const SET_SCHEDULE_DATE = "schedule/SET_SCHEDULE_DATE";
 export const SET_SELECTED_DATE = "schedule/SET_SELECTED_DATE";
 
 export const pageMove = createStandardAction(PAGE_MOVE)<{
   page: string
+}>();
+
+export const setSchedule = createStandardAction(SET_SCHEDULE)<{
+  schedules: [];
 }>();
 
 export const setScheduleDate = createStandardAction(SET_SCHEDULE_DATE)<{
@@ -24,10 +28,10 @@ export type Page = {
   page: string
 }
 export type ScheduleAction = ActionType<
-  typeof setScheduleDate | typeof setSelectedDate
+  typeof setSchedule | typeof setScheduleDate | typeof setSelectedDate
 >
 export type Schedules = {
-  schedules: scheduleType[],
+  schedules: [],
   schedulerDate: Date
   date: string
 }
