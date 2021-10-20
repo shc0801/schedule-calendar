@@ -6,12 +6,14 @@ import { LeftAngle, RightAngle } from "../../../assets/icon/index";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../modules/reducer";
 import { setScheduleDate } from "../../../modules/actions";
+import Api from "../../../apis";
 
 const Container = styled.div`
   width: 42vw;
   position: relative;
 
   padding: 15vh 0 0 3vw;
+  user-select: none;
 `;
 
 const CalenderHeader = styled.div`
@@ -42,12 +44,12 @@ const CalendarControl = styled.div`
   padding: 20px 40px 0 0;
 `
 
-const LeftAngleImg = styled.img<{ src: string }>`
+const LeftAngleImg = styled.img`
   width: 40px;
   height: 25px;
 `
 
-const RightAngleImg = styled.img<{ src: string }>`
+const RightAngleImg = styled.img`
   width: 40px;
   height: 25px;
 `
@@ -70,6 +72,14 @@ const Calendar: React.FC = () => {
   const { schedulerDate } = useSelector((state: RootState) => state.schedule);
   const year = schedulerDate.getFullYear();
   const month = schedulerDate.getMonth() + 1;
+
+  Api.post("/get/schedule")
+    .then((res) => {
+      window.localStorage.setItem("schedules", JSON.stringify(res.data.result));
+    })
+    .catch((err) => {
+      throw err;
+    });
   
   const prevDate = () => {
     dispatch(setScheduleDate({ schedulerDate: new Date(schedulerDate.setMonth(month - 2)) }));

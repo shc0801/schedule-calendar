@@ -5,7 +5,7 @@ import { RootState } from '../../../modules/reducer';
 import ScheduleDetail from './ScheduleDetail';
 import { UFO, ArrowIcon } from '../../../assets/icon/index';
 
-const bounce = keyframes`
+const BounceX = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateX(0);
   }
@@ -17,11 +17,25 @@ const bounce = keyframes`
   }
 `
 
+const BounceY = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+`
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
 
   position: relative;
+
+  user-select: none;
 `;
 
 const ScheduleContainer = styled.div`
@@ -34,11 +48,13 @@ const ScheduleContainer = styled.div`
 
 const SelectText = styled.span`
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1.2em;
+  font-size: 1.4em;
 `
 
 const UFOImg = styled.img`
   width: 250px;
+  
+  animation: ${BounceY} 2s infinite;
 
   margin-right: 20px;
   margin-bottom: 25px;
@@ -47,9 +63,9 @@ const UFOImg = styled.img`
 const ArrowIconImg = styled.img`
   width: 30px;
 
-  animation: ${bounce} 2s infinite;
+  animation: ${BounceX} 2s infinite;
 
-  margin-top: 20px;
+  margin-top: 25px;
 `
 
 const ScheduleDateContainer = styled.div`
@@ -69,16 +85,14 @@ const ScheduleDate = styled.span`
 `;
 
 const Schedule: React.FC = () => {
-  // const dispatch = useDispatch();
-
   const { date } = useSelector((state: RootState) => state.schedule);
   const dayArr: string[] = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-  const day = dayArr[new Date(date).getDay()];
-  const nowDate = new Date(date).getDate()
+  const nowDay = dayArr[new Date(date).getDay()];
+  const day = new Date(date).getDate()
 
   return (
     <Container>
-      {isNaN(nowDate) ? (
+      {isNaN(day) ? (
         <ScheduleContainer>
           <UFOImg src={UFO} />
           <SelectText>일정을 선택해주세요!</SelectText>
@@ -87,7 +101,7 @@ const Schedule: React.FC = () => {
       ) : (
           <>
             <ScheduleDateContainer>
-              <ScheduleDay>{`${day}, `}<ScheduleDate>{`${nowDate}일`}</ScheduleDate></ScheduleDay>
+              <ScheduleDay>{`${nowDay}, `}<ScheduleDate>{`${day}일`}</ScheduleDate></ScheduleDay>
             </ScheduleDateContainer>
             <ScheduleDetail />
           </>

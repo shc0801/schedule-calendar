@@ -1,14 +1,9 @@
-import React, {
-  ReactElement,
-  useMemo,
-  useCallback,
-  useEffect
-} from "react";
+import React, { ReactElement, useMemo, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Api from "../../../apis";
 
-import { setSchedule, setSelectedDate } from "../../../modules/actions";
+import { setSelectedDate } from "../../../modules/actions";
 import { RootState } from "../../../modules/reducer";
 
 const CalendarDateContainer = styled.div`
@@ -20,14 +15,14 @@ const CalendarDateContainer = styled.div`
     color: #9c9c9c;
     cursor: pointer;
   }
-  
+
   & > .selected {
     color: #fff;
   }
   & > .selected::before {
     background-color: #6d6ec7;
   }
-`
+`;
 
 const CalendarDateText = styled.div`
   width: calc(100% / 7);
@@ -46,15 +41,16 @@ const CalendarDateText = styled.div`
     background-color: #fff;
 
     position: absolute;
-    left: 50%; top: 50%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
 
-    transition: .2s;
+    transition: 0.2s;
 
     border-radius: 50%;
 
-    content: '';
+    content: "";
   }
 
   & > div {
@@ -78,14 +74,15 @@ const CalendarDateText = styled.div`
     background-color: #aaf;
     left: calc(28% + 40px);
   }
-`
+`;
 
-interface Props { }
+interface Props {}
 
 const CalendarDate: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const { schedules, schedulerDate } = useSelector((state: RootState) => state.schedule);
-  
+  const { schedulerDate } = useSelector(
+    (state: RootState) => state.schedule
+  );
 
   const printCalendar = useCallback((): ReactElement[] => {
     const yearCopy = schedulerDate.getFullYear();
@@ -97,49 +94,54 @@ const CalendarDate: React.FC<Props> = () => {
     let startDayCount = 1;
     let nextDayCount = 1;
 
-    const year = new Date(schedulerDate).getFullYear();
-    const month = new Date(schedulerDate).getMonth() + 1;
-
-    Api.post("/get/schedule", { year, month })
+    Api.post("/get/schedule")
       .then((res) => {
-        dispatch(setSchedule({ schedules: res.data.result }));
+        window.localStorage.setItem("schedules", JSON.stringify(res.data.result));
       })
       .catch((err) => {
         throw err;
       });
-    
+
     const getDateJSX = (
       children: number,
       id: string = "",
       styling: string = ""
     ): ReactElement => {
+      const user = JSON.parse(window.localStorage.getItem("user")) === null ? {user_id: ""} : JSON.parse(window.localStorage.getItem("user"))[0];
+      const schedules = JSON.parse(window.localStorage.getItem("schedules"))
       let count = 0;
-      schedules.forEach(item => {
-        const { day } = item;
-        console.log(item)
-        if(startDayCount === day) {
+      schedules.forEach((item) => {
+        const { year, month, day, user_id } = item;
+        if (startDayCount === day && yearCopy === year && monthCopy === month && user_id === user.user_id) {
           count++;
         }
-      })
-      const makeCircle = ():ReactElement[] => {
+      });
+      const makeCircle = (): ReactElement[] => {
         let result = [];
         for (let i = 0; i < count; i++) {
           result.push(<div key={i}></div>);
         }
         return result;
-      }
+      };
 
       if (!styling) {
         return (
-          <CalendarDateText key={id} className={styling}>{children}</CalendarDateText>
+          <CalendarDateText key={id} className={styling}>
+            {children}
+          </CalendarDateText>
         );
       }
 
       return (
-        <CalendarDateText key={id}
+        <CalendarDateText
+          key={id}
           data-id={id}
           className={styling}
-          onClick={e => handleClickDate(e.currentTarget)}>{children}{makeCircle()}</CalendarDateText>
+          onClick={(e) => handleClickDate(e.currentTarget)}
+        >
+          {children}
+          {makeCircle()}
+        </CalendarDateText>
       );
     };
 
@@ -147,17 +149,17 @@ const CalendarDate: React.FC<Props> = () => {
       const id = target.dataset.id;
       const classList = target.classList;
       const children = target.parentNode.children;
-  
+
       if (classList.contains("selected")) {
         dispatch(setSelectedDate({ date: "" }));
         classList.remove("selected");
         return;
       }
-  
-      Array.from(children).forEach(el => {
+
+      Array.from(children).forEach((el) => {
         el.classList.remove("selected");
       });
-  
+
       dispatch(setSelectedDate({ date: id }));
       classList.add("selected");
     };
@@ -203,11 +205,7 @@ const CalendarDate: React.FC<Props> = () => {
     };
   }, [dispatch]);
 
-  return (
-    <CalendarDateContainer>
-      {memoizedCalendar}
-    </CalendarDateContainer>
-  );
+  return <CalendarDateContainer>{memoizedCalendar}</CalendarDateContainer>;
 };
 
 export default CalendarDate;

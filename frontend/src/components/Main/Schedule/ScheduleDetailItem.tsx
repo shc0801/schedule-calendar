@@ -42,7 +42,7 @@ const ScheduleEndTime = styled.span`
 const ScheduleContourLine = styled.div`
   width: 3.5px;
   height: 50px;
-  background-color: #6d6ec7;
+  background-color: ${(props) => props.color};
 
   border-radius: 10px;
   margin: 5px 30px 0 30px;
@@ -62,22 +62,23 @@ const ScheduleContentTagName = styled.span`
 `
 
 interface Props {
-  startTime: string;
-  endTime: string;
-  TagName: string;
+  start_time: string;
+  end_time: string;
+  tag_name: string;
   content: string;
+  color: string;
 }
 
-const ScheduleDetailItem: FC<Props> = ({ startTime, endTime, TagName, content }) => {
+const ScheduleDetailItem: FC<Props> = ({ start_time, end_time, tag_name, content, color }) => {
   return (
     <ScheduleItem>
       <ScheduleTimeContainer>
-        <ScheduleStartTime>{startTime}</ScheduleStartTime>
-        <ScheduleEndTime>{endTime}</ScheduleEndTime>
+        <ScheduleStartTime>{start_time}</ScheduleStartTime>
+        <ScheduleEndTime>{end_time}</ScheduleEndTime>
       </ScheduleTimeContainer>      
-      <ScheduleContourLine />
+      <ScheduleContourLine color={color} />
       <ScheduleContent>
-        <ScheduleContentTagName>{TagName}</ScheduleContentTagName>
+        <ScheduleContentTagName>{tag_name}</ScheduleContentTagName>
         {content}
       </ScheduleContent>
     </ScheduleItem>
