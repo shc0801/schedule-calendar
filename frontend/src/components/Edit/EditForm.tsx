@@ -3,6 +3,9 @@ import styled from "styled-components";
 import ColorPicker from "react-pick-color";
 import toast from "react-hot-toast";
 import Api from "../../apis";
+import { pageMove } from "../../modules/actions";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 
 const Container = styled.form`
   font-size: 1.4em;
@@ -114,9 +117,9 @@ const ScheduleAddBtn = styled.div`
   font-size: 0.7em;
   font-weight: 700;
 
-  position: absolute;
-  right: 10%;
-  bottom: -15%;
+  position: fixed;
+  right: 8%;
+  bottom: 5%;
 
   margin-top: 50px;
   padding: 20px 80px;
@@ -128,9 +131,9 @@ const FormResetText = styled.p`
   font-size: 0.6em;
   font-weight: bold;
 
-  position: absolute;
-  right: 50%;
-  bottom: -15%;
+  position: fixed;
+  right: 45%;
+  bottom: 5%;
 `;
 
 const FormResetTextBold = styled.u`
@@ -138,6 +141,8 @@ const FormResetTextBold = styled.u`
 `;
 
 const EditForm: FC = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [color, setColor] = useState("#fff");
 
   const [schedule, setSchedule] = useState({
@@ -186,6 +191,7 @@ const EditForm: FC = () => {
       content: content,
     });
   };
+
   const resetendTime = () => {
     setSchedule({
       title: title,
@@ -260,7 +266,10 @@ const EditForm: FC = () => {
       color,
     })
       .then((res) => {
-        toast.success(res.data.msg);
+        alert(res.data.msg);
+        dispatch(pageMove({ page: "/home" }));
+        history.push("/home");
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.msg);
