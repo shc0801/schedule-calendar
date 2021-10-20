@@ -12,3 +12,4 @@ export { default as LogoImg } from "./Logo.svg";
 export { default as EditTitleIcon } from "./EditTitleIcon.svg";
 export { default as UFO } from "./UFO.svg";
 export { default as ArrowIcon } from "./Arrow.svg";
+export { default as Ghost } from "./Ghost.svg";
