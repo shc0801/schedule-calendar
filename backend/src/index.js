@@ -83,7 +83,7 @@ app.post("/edit", (req, res) => {
 });
 
 app.post("/get/schedule", (req, res) => {
-  const sql = `SELECT * FROM schedules WHERE year = '${req.body.year}' AND month = '${req.body.month}'`;
+  const sql = `SELECT * FROM schedules`;
   con.query(sql, req.body, function (err, result, fields) {
     res.json({ msg: "일정이 조회되었습니다!", result });
   });
