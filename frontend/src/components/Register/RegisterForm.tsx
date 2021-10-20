@@ -95,7 +95,7 @@ const GoLoginTextU = styled.u`
   cursor: pointer;
 `;
 
-const EditForm: FC = () => {
+const RegisterForm: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -154,7 +154,7 @@ const EditForm: FC = () => {
     
     Api.post("/register", { user_id, user_name, user_pass })
     .then(res => {
-      toast.success(res.data.msg);
+      alert("회원가입 되었습니다!");
       goLoginPage();
     })
     .catch(err => {
@@ -198,4 +198,4 @@ const EditForm: FC = () => {
   );
 };
 
-export default EditForm;
+export default RegisterForm;
