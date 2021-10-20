@@ -116,8 +116,9 @@ const LoginForm: FC = () => {
     Api.post("/login", { user_id, user_pass })
       .then((res) => {
         window.localStorage.setItem("user", JSON.stringify(res.data.result));
-        dispatch(pageMove({ page: "/home" }));
+        alert("로그인 되었습니다!");
         history.push("/home");
+        dispatch(pageMove({ page: "/home" }));
         window.location.reload();
       })
       .catch((err) => {
