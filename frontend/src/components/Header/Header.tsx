@@ -1,5 +1,4 @@
-import React, { FC, useEffect } from "react";
-import toast from "react-hot-toast";
+import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -47,9 +46,6 @@ const LogoutText = styled.span`
 `;
 
 const Header: FC = () => {
-  useEffect(() => {
-
-  })
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -60,7 +56,7 @@ const Header: FC = () => {
 
   const Logout = () => {
     localStorage.removeItem("user");
-    toast.success("로그아웃 되었습니다!");
+    alert("로그아웃 되었습니다!");
     
     dispatch(pageMove({ page: "/home" }));
     history.push("/home");
