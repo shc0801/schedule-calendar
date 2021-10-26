@@ -116,7 +116,7 @@ const LoginForm: FC = () => {
     Api.post("/login", { user_id, user_pass })
       .then((res) => {
         window.localStorage.setItem("user", JSON.stringify(res.data.result));
-        alert("로그인 되었습니다!");
+        alert(res.data.msg);
         history.push("/home");
         dispatch(pageMove({ page: "/home" }));
         window.location.reload();
@@ -136,6 +136,12 @@ const LoginForm: FC = () => {
         throw err;
       });
   };
+
+  if (JSON.parse(window.localStorage.getItem("user")) !== null) {
+    alert("로그인 상태에서는 접근하실 수 없습니다.");
+    dispatch(pageMove({ page: "/register" }));
+    history.push("/register");
+  }
 
   return (
     <Container>
