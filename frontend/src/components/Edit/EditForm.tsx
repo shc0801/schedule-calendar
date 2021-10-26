@@ -272,7 +272,17 @@ const EditForm: FC = () => {
         window.location.reload();
       })
       .catch((err) => {
-        toast.error(err.response.data.msg);
+        toast.error(err.response.data.msg, {
+          style: {
+            border: "1px solid #6d6ec7",
+            padding: "16px",
+            color: "#6d6ec7",
+          },
+          iconTheme: {
+            primary: "#6d6ec7",
+            secondary: "#FFFAEE",
+          },
+        });
         throw err;
       });
   };
