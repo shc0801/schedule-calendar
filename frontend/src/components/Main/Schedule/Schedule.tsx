@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { useSelector } from "react-redux";
 import { RootState } from '../../../modules/reducer';
 import ScheduleDetail from './ScheduleDetail';
-import { UFO, ArrowIcon } from '../../../assets/icon/index';
+import { UFO, ArrowIcon, EffectBackground } from '../../../assets/icon/index';
 
 const BounceX = keyframes`
   0%, 20%, 50%, 80%, 100% {
@@ -39,6 +39,8 @@ const Container = styled.div`
 `;
 
 const ScheduleContainer = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,13 +53,19 @@ const SelectText = styled.span`
   font-size: 1.4em;
 `
 
+const EffectBackgroundImg = styled.img`
+  width: 65%;
+  position: absolute;
+  top: 150px;
+`
+
 const UFOImg = styled.img`
   width: 250px;
   
   animation: ${BounceY} 2s infinite;
 
   margin-right: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
 `
 
 const ArrowIconImg = styled.img`
@@ -94,6 +102,7 @@ const Schedule: React.FC = () => {
     <Container>
       {isNaN(day) ? (
         <ScheduleContainer>
+          <EffectBackgroundImg src={EffectBackground}/>
           <UFOImg src={UFO} />
           <SelectText>일정을 선택해주세요!</SelectText>
           <ArrowIconImg src={ArrowIcon} />

@@ -1,5 +1,8 @@
 import React, { FC } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
+import Api from "../../../apis";
+import { RecycleIcon } from "../../../assets/icon/index";
 
 const ScheduleItem = styled.div`
   width: 90%;
@@ -10,9 +13,8 @@ const ScheduleItem = styled.div`
   transition: .5s;
 
   border-radius: 20px;
-  padding: 20px 100px 20px 30px;
+  padding: 20px 50px 20px 30px;
   margin-bottom: 20px;
-
 
   & * {
     font-family: 'Noto Sans KR', sans-serif;
@@ -25,6 +27,8 @@ const ScheduleItem = styled.div`
 `
 
 const ScheduleTimeContainer = styled.div`
+  width: 13%;
+
   display: flex;
   flex-direction: column;
 `
@@ -49,19 +53,32 @@ const ScheduleContourLine = styled.div`
 `
 
 const ScheduleContent = styled.div`
+  width: 90%;
   color: #474747;
 
   display: flex;
   flex-direction: column;
 
   padding-top: 5px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const ScheduleContentTagName = styled.span`
   color: #9c9c9c;
 `
 
+const RecycleIconImg = styled.img`
+  width: 7%;
+
+  margin-left: 20px;
+  cursor: pointer;
+`
+
 interface Props {
+  id: number;
   start_time: string;
   end_time: string;
   tag_name: string;
@@ -69,7 +86,36 @@ interface Props {
   color: string;
 }
 
-const ScheduleDetailItem: FC<Props> = ({ start_time, end_time, tag_name, content, color }) => {
+const ScheduleDetailItem: FC<Props> = ({ id, start_time, end_time, tag_name, content, color }) => {
+  const scheduleDelete = () => {
+    Api.post("/delete/schedule", { id })
+      .then((res) => {
+        Api.post("/get/schedule")
+          .then((res) => {
+            window.localStorage.setItem("schedules", JSON.stringify(res.data.result));
+          })
+          .catch((err) => {
+            throw err;
+          });
+        alert(res.data.msg);
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg, {
+          style: {
+            border: "1px solid #6d6ec7",
+            padding: "16px",
+            color: "#6d6ec7",
+          },
+          iconTheme: {
+            primary: "#6d6ec7",
+            secondary: "#FFFAEE",
+          },
+        });
+        throw err;
+      });
+  }
+
   return (
     <ScheduleItem>
       <ScheduleTimeContainer>
@@ -81,6 +127,7 @@ const ScheduleDetailItem: FC<Props> = ({ start_time, end_time, tag_name, content
         <ScheduleContentTagName>{tag_name}</ScheduleContentTagName>
         {content}
       </ScheduleContent>
+      <RecycleIconImg src={RecycleIcon} onClick={scheduleDelete} />
     </ScheduleItem>
   );
 };

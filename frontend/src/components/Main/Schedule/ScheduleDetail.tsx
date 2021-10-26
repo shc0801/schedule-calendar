@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { RootState } from "../../../modules/reducer";
 import ScheduleDetailItem from "./ScheduleDetailItem";
-import { Ghost } from "../../../assets/icon/index";
+import { Ghost, EffectBackground } from "../../../assets/icon/index";
 import { useHistory } from "react-router";
 import { pageMove } from "../../../modules/actions";
 
@@ -42,8 +42,16 @@ const ScheduleContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
+  position: relative;
+
   padding-top: 15vh;
 `;
+
+const EffectBackgroundImg = styled.img`
+  width: 65%;
+  position: absolute;
+  top: 120px;
+`
 
 const GhostImg = styled.img`
   width: 200px;
@@ -51,12 +59,12 @@ const GhostImg = styled.img`
   animation: ${bounce} 2s infinite;
 
   margin-right: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const SelectText = styled.span`
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 1.4em;
+  font-size: 1.55em;
 `;
 
 const DetailText = styled.p`
@@ -118,6 +126,7 @@ const ScheduleDetail: React.FC = () => {
     <ScheduleGroupContainer>
       {schedule.length === 0 ? (
         <ScheduleContainer>
+          <EffectBackgroundImg src={EffectBackground} />
           <GhostImg src={Ghost} />
           <SelectText>일정이 존재하지 않아요!</SelectText>
           <DetailText>
@@ -131,6 +140,7 @@ const ScheduleDetail: React.FC = () => {
           {schedule.map((item) => (
             <ScheduleDetailItem
               key={item.id}
+              id={item.id}
               start_time={item.start_time}
               end_time={item.end_time}
               tag_name={item.tag_name}
