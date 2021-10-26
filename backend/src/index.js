@@ -53,7 +53,7 @@ app.post("/register", (req, res) => {
         res.status(400).json({ msg: "데이터가 올바르지 않습니다." });
         return;
       }
-      res.json({ msg: "회원가입 성공!", result });
+      res.json({ msg: "회원가입 되었습니다!", result });
     });
   });
 });
@@ -66,7 +66,7 @@ app.post("/login", (req, res) => {
       res.status(400).json({ msg: "데이터가 올바르지 않습니다." });
       return;
     }
-    res.json({ msg: "로그인 성공!", result });
+    res.json({ msg: "로그인 되었습니다!", result });
   });
 });
 
@@ -86,6 +86,13 @@ app.post("/get/schedule", (req, res) => {
   const sql = `SELECT * FROM schedules`;
   con.query(sql, req.body, function (err, result, fields) {
     res.json({ msg: "일정이 조회되었습니다!", result });
+  });
+});
+
+app.post("/delete/schedule", (req, res) => {
+  const sql = `DELETE FROM schedules WHERE id = ${req.body.id}`;
+  con.query(sql, req.body, function (err, result, fields) {
+    res.json({ msg: "일정이 삭제되었습니다!", result });
   });
 });
 
