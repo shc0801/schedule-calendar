@@ -154,7 +154,7 @@ const RegisterForm: FC = () => {
     
     Api.post("/register", { user_id, user_name, user_pass })
     .then(res => {
-      alert("회원가입 되었습니다!");
+      alert(res.data.msg);
       goLoginPage();
     })
     .catch(err => {
