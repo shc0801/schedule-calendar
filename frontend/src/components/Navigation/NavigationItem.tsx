@@ -6,6 +6,7 @@ import { pageMove } from "../../modules/actions";
 
 const Container = styled.div`
   width: 100%;
+  height: 85px;
   color: #fff;
 
   display: flex;
@@ -14,6 +15,11 @@ const Container = styled.div`
 
   padding: 30px 0;
   cursor: pointer;
+
+  &.login {
+    position: absolute;
+    top: calc(85px * 2);
+  }
 `;
 
 const Icon = styled.img`
@@ -28,7 +34,7 @@ interface Props {
   isActive: boolean;
 }
 
-const NavigationItemContainer: FC<Props> = ({ route, src, isActive }) => {
+const NavigationItemContainer: FC<Props> = ({ name, route, src, isActive }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -38,7 +44,7 @@ const NavigationItemContainer: FC<Props> = ({ route, src, isActive }) => {
   };
 
   return (
-    <Container className={isActive ? "active" : ""} onClick={onClick}>
+    <Container className={isActive ? ` ${route.substring(1)}` : `${route.substring(1)}`} onClick={onClick}>
       <Icon src={src}></Icon>
     </Container>
   );

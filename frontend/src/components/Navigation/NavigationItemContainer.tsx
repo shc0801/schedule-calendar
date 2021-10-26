@@ -11,6 +11,8 @@ const Container = styled.nav`
   width: 110px;
   display: flex;
   flex-direction: column;
+
+  position: relative;
   
   margin-bottom: 70px;
 
