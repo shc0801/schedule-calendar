@@ -8,8 +8,8 @@ const EditPage: React.FC = () => {
   const dispatch = useDispatch();
 
   alert("추후 공개될 페이지입니다.");
-  dispatch(pageMove({ page: "/home" }));
-  history.push("/home");
+  dispatch(pageMove({ page: "/1/home" }));
+  history.push("/1/home");
 
   return (
     <></>

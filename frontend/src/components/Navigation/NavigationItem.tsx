@@ -44,7 +44,7 @@ const NavigationItemContainer: FC<Props> = ({ name, route, src, isActive }) => {
   };
 
   return (
-    <Container className={isActive ? ` ${route.substring(1)}` : `${route.substring(1)}`} onClick={onClick}>
+    <Container className={isActive ? `${route.substring(1).split("/")[1]}` : `${route.substring(1).split("/")[1]}`} onClick={onClick}>
       <Icon src={src}></Icon>
     </Container>
   );

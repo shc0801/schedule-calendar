@@ -267,8 +267,8 @@ const EditForm: FC = () => {
     })
       .then((res) => {
         alert(res.data.msg);
-        dispatch(pageMove({ page: "/home" }));
-        history.push("/home");
+        dispatch(pageMove({ page: "/1/home" }));
+        history.push("/1/home");
         window.location.reload();
       })
       .catch((err) => {

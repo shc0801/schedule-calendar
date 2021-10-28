@@ -118,8 +118,8 @@ const ScheduleDetail: React.FC = () => {
   );
 
   const goEditPage = () => {
-    dispatch(pageMove({ page: "/edit" }));
-    history.push("/edit");
+    dispatch(pageMove({ page: "/1/edit" }));
+    history.push("/1/edit");
   };
 
   return (

@@ -29,11 +29,11 @@ const App: FC<{}> = () => {
         <Navigation />
         <Switch>
           <Route path="/1" exact render={() => <MainPage />} />
-          <Route path="/home" component={MainPage} />
-          <Route path="/edit" component={EditPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/register" component={RegisterPage} />
-          <Route path="/option" component={OptionPage} />
+          <Route path="/1/home" component={MainPage} />
+          <Route path="/1/edit" component={EditPage} />
+          <Route path="/1/login" component={LoginPage} />
+          <Route path="/1/register" component={RegisterPage} />
+          <Route path="/1/option" component={OptionPage} />
         </Switch>
       </Router>
     </GlobalContainer>

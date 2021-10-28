@@ -50,16 +50,16 @@ const Header: FC = () => {
   const dispatch = useDispatch();
 
   const Login = () => {
-    dispatch(pageMove({ page: "/login" }));
-    history.push("/login");
+    dispatch(pageMove({ page: "/1/login" }));
+    history.push("/1/login");
   };
 
   const Logout = () => {
     localStorage.removeItem("user");
     alert("로그아웃 되었습니다!");
     
-    dispatch(pageMove({ page: "/home" }));
-    history.push("/home");
+    dispatch(pageMove({ page: "/1/home" }));
+    history.push("/1/home");
     window.location.reload();
   };
 

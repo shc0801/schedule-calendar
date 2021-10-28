@@ -2,13 +2,13 @@ const express = require("express");
 var cors = require("cors");
 
 const app = express();
-const port = 3002;
+const port = 10001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+     
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://test.itsw.info",
   credentials: true,
 };
 app.use(cors(corsOptions));

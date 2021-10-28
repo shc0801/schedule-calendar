@@ -100,8 +100,8 @@ const RegisterForm: FC = () => {
   const dispatch = useDispatch();
 
   const goLoginPage = () => {
-    dispatch(pageMove({ page: "/login" }));
-    history.push("/login");
+    dispatch(pageMove({ page: "/1/login" }));
+    history.push("/1/login");
   };
 
   const [input, setInput] = useState({

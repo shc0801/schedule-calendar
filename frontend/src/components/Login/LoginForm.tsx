@@ -82,8 +82,8 @@ const LoginForm: FC = () => {
   const dispatch = useDispatch();
 
   const goRegisterPage = () => {
-    dispatch(pageMove({ page: "/register" }));
-    history.push("/register");
+    dispatch(pageMove({ page: "/1/register" }));
+    history.push("/1/register");
   };
 
   const [input, setInput] = useState({
@@ -117,8 +117,8 @@ const LoginForm: FC = () => {
       .then((res) => {
         window.localStorage.setItem("user", JSON.stringify(res.data.result));
         alert(res.data.msg);
-        history.push("/home");
-        dispatch(pageMove({ page: "/home" }));
+        history.push("/1/home");
+        dispatch(pageMove({ page: "/1/home" }));
         window.location.reload();
       })
       .catch((err) => {
@@ -139,8 +139,8 @@ const LoginForm: FC = () => {
 
   if (JSON.parse(window.localStorage.getItem("user")) !== null) {
     alert("로그인 상태에서는 접근하실 수 없습니다.");
-    dispatch(pageMove({ page: "/register" }));
-    history.push("/register");
+    dispatch(pageMove({ page: "/1/register" }));
+    history.push("/1/register");
   }
 
   return (
