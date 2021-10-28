@@ -10,7 +10,8 @@ import {
   MainPage,
   EditPage,
   LoginPage,
-  RegisterPage
+  RegisterPage,
+  OptionPage
 } from './pages';
 import { Toaster } from 'react-hot-toast';
 
@@ -32,6 +33,7 @@ const App: FC<{}> = () => {
           <Route path="/edit" component={EditPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
+          <Route path="/option" component={OptionPage} />
         </Switch>
       </Router>
     </GlobalContainer>
