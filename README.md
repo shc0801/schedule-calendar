@@ -1,5 +1,7 @@
 # Scheder
 
+http://test.itsw.info/1/
+
 > 리액트 기반의 일정 관리 사이트
 
 ## 📌 프로젝트 소개
